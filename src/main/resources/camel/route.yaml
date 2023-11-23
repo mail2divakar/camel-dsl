@@ -6,3 +6,37 @@
       steps:
         - log:
             message: '${in.body}'
+- route:
+    id:  route-1895
+    from:
+      uri: 'direct:order'
+      steps:
+        - log:
+            message: '${in.body}'
+
+- route:
+    id:  route-1896
+    from:
+      uri: 'direct:startvalidator'
+      steps:
+        - to:
+            uri: "file://C:/tmp/myschema.json"
+
+- route:
+    id:  route-1897
+    from:
+      uri: 'direct:expressionvalidator'
+      steps:
+        - log:
+            message: '${in.body}'
+        - filter:
+            expression:
+              simple: "${in.body} == 101"
+            steps:
+              - to:
+                  uri: "log:pass"
+        - to:
+            uri: "log:original"
+
+
+

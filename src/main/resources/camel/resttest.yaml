@@ -1,8 +1,7 @@
-
 - route:
     id: route-1894
     from:
-      uri: rest:get:/test
+      uri: rest:get:hello
       steps:
         - log:
             message: '${in.body}'

@@ -1,0 +1,8 @@
+
+- route:
+    id: route-1893
+    from:
+      uri: 'direct:sample'
+      steps:
+        - log:
+            message: '${in.body}'

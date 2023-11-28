@@ -77,9 +77,9 @@ public class GreetingController {
     }
 
 
-    @GetMapping("/exception")
-    public String exception() {
-        producerTemplate.requestBody("direct:errorHandling", "Exception catch Success", String.class);
-        return "Exception";   //To change body of created methods use File | Settings | File Templates.
+    @GetMapping("exception")
+    public String handleException() {
+        producerTemplate.requestBody("direct:errorHandler", "Exception", String.class);
+        return "Exception handled";   //To change body of created methods use File | Settings | File Templates.
     }
 }

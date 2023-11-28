@@ -79,6 +79,23 @@
 #        - to:
 #            direct:next
 
+- route:
+    id: route-1900
+    from:
+      uri: 'direct:errorHandler'
+      steps:
+        - log:
+            message: 'Inside Exception Handler'
+        - doTry:
+            steps:
+              - bean:
+                  method: 'process'
+                  ref: 'com.vm.camel.sb.cameldsl.configuration.CustomExceptionProcessor'
+            doCatch:
+              - exception: 'java.lang.Exception'
+                steps:
+                  - log:
+                      message: 'Exception Handled Successfully: ${exception.message}'
 
 
 

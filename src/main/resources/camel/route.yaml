@@ -79,17 +79,8 @@
 #        - to:
 #            direct:next
 
-#- beans:
-#    - id: myCustomLoggerBean
-#      class: com.vm.camel.sb.cameldsl.configuration.MyCustomLogger
 
-#- route:
-#    id:  route-1900
-#    from:
-#      uri: 'direct:exceptionHandler'
-#      steps:
-#        - doTry:
-#            process: processFail
+
 
 
 

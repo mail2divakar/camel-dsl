@@ -11,8 +11,8 @@ public class CustomException implements Processor {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(CustomException.class);
     @Override
-    public void process(Exchange exchange) throws Exception {
-        LOGGER.error("Exception Thrown");
-        throw new IllegalArgumentException("An exception happened on purpose");
+    public void process(Exchange exchange)  {
+        int result = 1/0;
+        LOGGER.info("Result is {}", result);
     }
 }

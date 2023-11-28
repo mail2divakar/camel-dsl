@@ -4,6 +4,7 @@ import com.vm.camel.sb.cameldsl.model.MySchema;
 import com.vm.camel.sb.cameldsl.model.Order;
 import org.apache.camel.ProducerTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -31,11 +32,11 @@ public class GreetingController {
     }
 
     @PostMapping("/save")
-    public List<Order> save(@RequestBody Order order) {
+    public ResponseEntity<Order> save(@RequestBody Order order) {
         producerTemplate.requestBody("direct:order",order);
         List<Order> orderList = new ArrayList<>();
         orderList.add(order);
-        return orderList;
+        return ResponseEntity.ok().body(orderList.get(0));
     }
 
     @PostMapping("/validate")
@@ -45,35 +46,35 @@ public class GreetingController {
     }
 
     @GetMapping("/expression")
-    public String expressionValidator(@RequestHeader("myHeader") String myHeader) {
+    public ResponseEntity<String> expressionValidator(@RequestHeader("myHeader") String myHeader) {
         Optional<String> optional = Optional.ofNullable(myHeader);
         if(optional.isPresent()) {
             producerTemplate.sendBodyAndHeader("direct:expressions", myHeader, "myHeader", "foo");
-            return "Route triggered with value of " + myHeader;
+            return ResponseEntity.ok().body("Route triggered with value of " + myHeader);
         }
-        return "Please add Header Values";
+        return ResponseEntity.ok().body("Please add Header Values");//To change body of created methods use File | Settings | File Templates.
     }
 
 
     @GetMapping("/expression1")
-    public String expressionValidator1(@RequestHeader("continue") String myHeader) {
+    public ResponseEntity<String> expressionValidator(@RequestHeader("myHeader") String myHeader, @RequestHeader("continue") String continueHeader) {
         Optional<String> optional = Optional.ofNullable(myHeader);
         if(optional.isPresent()) {
             producerTemplate.sendBodyAndHeader("direct:example", myHeader, "continue", myHeader);
-            return "Header value " + myHeader;
+            return ResponseEntity.ok().body("Route triggered with value of " + myHeader);
         }
-        return "Please add Header Values";   //To change body of created methods use File | Settings | File Templates.
+        return ResponseEntity.ok().body("Please add Header Values");//To change body of created methods use File | Settings | File Templates.
     }
 
 
     @PostMapping("/logger")
-    public String customLogger(@RequestBody String customeLogger) {
+    public ResponseEntity<String> customLogger(@RequestBody String customeLogger) {
         Optional<String> optional = Optional.ofNullable(customeLogger);
         if(!optional.isPresent()) {
             producerTemplate.requestBody("direct:customlogger", customeLogger, String.class);
-            return customeLogger;
+            return  ResponseEntity.ok().body("Route triggered with value of " + customeLogger);
         }
-        return "Please provide the custom logger body";   //To change body of created methods use File | Settings | File Templates.
+        return ResponseEntity.ok().body("Please add the body Values");//To change body of created methods use File | Settings | File Templates.
     }
 
 

@@ -6,7 +6,6 @@ import org.springframework.context.annotation.PropertySource;
 
 
 @SpringBootApplication
-@PropertySource(value = "classpath:myschema.json")
 public class CamelDslApplication {
 
 	public static void main(String[] args) {

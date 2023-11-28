@@ -10,16 +10,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 @RestController
+@RequestMapping(value="/api")
 public class GreetingController {
     @Autowired
     ProducerTemplate producerTemplate;
-    @GetMapping("/api/greet/{name}")
+    @GetMapping("/greet/{name}")
     public String greet(@PathVariable String name) {
         producerTemplate.requestBody("direct:sample",name,String.class);
         return "Hello, " + name + "!";
     }
 
-    @PostMapping("/api/save")
+    @PostMapping("/save")
     public List<Order> save(@RequestBody Order order) {
         producerTemplate.requestBody("direct:order",order);
         List<Order> orderList = new ArrayList<>();
@@ -27,16 +28,32 @@ public class GreetingController {
         return orderList;
     }
 
-    @PostMapping("api/validate")
+    @PostMapping("/validate")
     public String validate(@RequestBody MySchema mySchema) {
         producerTemplate.requestBody("direct:startvalidator", "mock:valid", String.class);
         return "valid";
     }
 
-    @GetMapping("api/emp/{id}")
-    public String expressionValidator(@PathVariable(value="id", required = true) String id) {
-        producerTemplate.requestBody("direct:expressionvalidator", id, String.class);
-        return id;
+    @GetMapping("/expression")
+    public String expressionValidator(@RequestHeader("myHeader") String myHeader) {
+        producerTemplate.sendBodyAndHeader("direct:expressions", myHeader, "myHeader", "foo");
+        return "Route triggered with value of "+ myHeader;
     }
+
+
+    @GetMapping("/expression1")
+    public String expressionValidator1(@RequestHeader("continue") String myHeader) {
+        producerTemplate.sendBodyAndHeader("direct:example", myHeader, "continue", myHeader);
+        return "Header value "+ myHeader;
+    }
+
+
+    @PostMapping("/logger")
+    public String customLogger(@RequestBody String customeLogger) {
+        producerTemplate.requestBody("direct:customlogger", customeLogger, String.class);
+        return customeLogger;
+    }
+
+
 
 }

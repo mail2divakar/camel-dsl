@@ -25,18 +25,72 @@
 - route:
     id:  route-1897
     from:
-      uri: 'direct:expressionvalidator'
+      uri: direct:expressions
       steps:
-        - log:
-            message: '${in.body}'
+        - set-header:
+            name: myHeader
+            expression:
+              constant: foo
+        - choice:
+            when:
+              - simple: "${header.myHeader} == 'foo'"
+                steps:
+                  - log:
+                      message: '${in.body}'
+#                  - to:
+#                      uri: direct:foo
+              - simple: "${header.myHeader} == 'bar'"
+                steps:
+                  - log:
+                      message: 'This is bar message'
+#                  - to:
+#                      uri: direct:bar
+            otherwise:
+              steps:
+                - log:
+                    message: 'This is otherwise message'
+#                - to:
+#                    uri: direct:default
+
+- route:
+    id:  route-1898
+    from:
+      uri: 'direct:example'
+      steps:
         - filter:
             expression:
-              simple: "${in.body} == 101"
+              simple: "${in.header.continue} == true"
             steps:
-              - to:
-                  uri: "log:pass"
+              - log:
+                  message: '${in.body}'
+#              - to:
+#                  uri: "log:filtered"
         - to:
             uri: "log:original"
+
+- route:
+    id:  route-1899
+    from:
+      uri: 'direct:customlogger'
+      steps:
+        - to: bean:com.vm.camel.sb.cameldsl.configuration.MyCustomLogger
+#        - process:
+#            bean: com.vm.camel.sb.cameldsl.configuration.MyCustomLogger
+#        - to:
+#            direct:next
+
+#- beans:
+#    - id: myCustomLoggerBean
+#      class: com.vm.camel.sb.cameldsl.configuration.MyCustomLogger
+
+#- route:
+#    id:  route-1900
+#    from:
+#      uri: 'direct:exceptionHandler'
+#      steps:
+#        - doTry:
+#            process: processFail
+
 
 
 

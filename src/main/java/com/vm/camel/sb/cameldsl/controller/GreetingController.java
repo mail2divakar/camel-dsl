@@ -78,9 +78,15 @@ public class GreetingController {
     }
 
 
-    @GetMapping("exception")
+    @GetMapping("/exception")
     public String handleException() {
         producerTemplate.requestBody("direct:errorHandler", "Exception", String.class);
         return "Exception handled";   //To change body of created methods use File | Settings | File Templates.
+    }
+
+    @GetMapping("/sqs")
+    public String sqsExample() {
+        producerTemplate.sendBodyAndHeader("direct:sendsqs", "Hello, SQS!", "CamelAws2SqsQueueUrl", "https://sqs.ap-south-1.amazonaws.com/014916155302/CamelQueue");
+        return "SQS Message Send";   //To change body of created methods use File | Settings | File Templates.
     }
 }

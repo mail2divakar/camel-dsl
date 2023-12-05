@@ -84,9 +84,16 @@ public class GreetingController {
         return "Exception handled";   //To change body of created methods use File | Settings | File Templates.
     }
 
-    @GetMapping("/sqs")
-    public String sqsExample() {
-        producerTemplate.sendBodyAndHeader("direct:sendsqs", "Hello, SQS!", "CamelAws2SqsQueueUrl", "https://sqs.ap-south-1.amazonaws.com/014916155302/CamelQueue");
-        return "SQS Message Send";   //To change body of created methods use File | Settings | File Templates.
+    @PostMapping("api/conversion")
+    public String convertDwScriptToJson(@RequestBody String request) {
+        String result = producerTemplate.requestBody("direct:conversion", request, String.class);
+        return result;
     }
+
+
+//    @GetMapping("/sqs")
+//    public String sqsExample() {
+//        producerTemplate.sendBodyAndHeader("direct:sendsqs", "Hello, SQS!", "CamelAws2SqsQueueUrl", "https://sqs.ap-south-1.amazonaws.com/014916155302/CamelQueue");
+//        return "SQS Message Send";   //To change body of created methods use File | Settings | File Templates.
+//    }
 }

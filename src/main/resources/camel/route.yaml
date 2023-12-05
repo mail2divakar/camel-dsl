@@ -98,27 +98,36 @@
                       message: 'Exception Handled Successfully: ${exception.message}'
 
 
+#- route:
+#    id: route-1901
+#    from:
+#      uri: 'direct:sendsqs'
+#      steps:
+##        - setHeader:
+##            CamelAws2SqsQueueUrl: 'https://sqs.ap-south-1.amazonaws.com/014916155302/CamelQueue'
+#        - setBody:
+#            constant: 'Camel Example Hello, SQS!'
+##        - to: 'https://sqs.ap-south-1.amazonaws.com/014916155302/CamelQueue'
+##        - setHeader:
+##            CamelAws2SqsQueueUrl: "https://sqs.ap-south-1.amazonaws.com/014916155302/CamelQueue"
+#        - to: "aws2-sqs:{{simple:${header.CamelAws2SqsQueueUrl}}}"
+#
+#- camelContext:
+#    component:
+#      aws-sqs:
+#        access-key: AKIAQG6ISO6TE6VCVXR6
+#        secret-key: 0h4s3cLaia+IFCp0TAH2gjy68nAkVCLmY+tI0byn
+#        region: us-east-1  # Replace with your desired region
+#        use-default-credentials-provider: false
+
 - route:
     id: route-1901
     from:
-      uri: 'direct:sendsqs'
+      uri: 'direct:conversion'
       steps:
-#        - setHeader:
-#            CamelAws2SqsQueueUrl: 'https://sqs.ap-south-1.amazonaws.com/014916155302/CamelQueue'
-        - setBody:
-            constant: 'Camel Example Hello, SQS!'
-#        - to: 'https://sqs.ap-south-1.amazonaws.com/014916155302/CamelQueue'
-#        - setHeader:
-#            CamelAws2SqsQueueUrl: "https://sqs.ap-south-1.amazonaws.com/014916155302/CamelQueue"
-        - to: "aws2-sqs:{{simple:${header.CamelAws2SqsQueueUrl}}}"
+        - to:
+            uri: 'customComponent://transform'
 
-- camelContext:
-    component:
-      aws-sqs:
-        access-key: AKIAQG6ISO6TE6VCVXR6
-        secret-key: 0h4s3cLaia+IFCp0TAH2gjy68nAkVCLmY+tI0byn
-        region: us-east-1  # Replace with your desired region
-        use-default-credentials-provider: false
 
 
 

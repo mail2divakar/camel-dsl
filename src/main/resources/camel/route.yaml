@@ -41,8 +41,7 @@
 #                      uri: direct:foo
               - simple: "${header.myHeader} == 'bar'"
                 steps:
-                  - log:
-                      message: 'This is bar message'
+                  - log: 'This is bar message'
 #                  - to:
 #                      uri: direct:bar
             otherwise:

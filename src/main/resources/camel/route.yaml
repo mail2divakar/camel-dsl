@@ -120,13 +120,13 @@
 #        region: us-east-1  # Replace with your desired region
 #        use-default-credentials-provider: false
 
-- route:
-    id: route-1901
-    from:
-      uri: 'direct:conversion'
-      steps:
-        - to:
-            uri: 'customComponent://transform'
+#- route:
+#    id: route-1901
+#    from:
+#      uri: 'direct:conversion'
+#      steps:
+#        - to:
+#            uri: 'customComponent://transform'
 
 
 

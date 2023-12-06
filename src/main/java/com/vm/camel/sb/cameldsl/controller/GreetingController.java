@@ -30,13 +30,13 @@ public class GreetingController {
         producerTemplate.requestBody("direct:sample",name,String.class);
         return "Hello, " + name + "!";
     }
-
+    List<Order> orderList = new ArrayList<>();
     @PostMapping("/save")
-    public ResponseEntity<Order> save(@RequestBody Order order) {
+    public ResponseEntity<?> save(@RequestBody Order order) {
+
         producerTemplate.requestBody("direct:order",order);
-        List<Order> orderList = new ArrayList<>();
         orderList.add(order);
-        return ResponseEntity.ok().body(orderList.get(0));
+        return ResponseEntity.ok().body(orderList);
     }
 
     @PostMapping("/validate")
@@ -57,11 +57,11 @@ public class GreetingController {
 
 
     @GetMapping("/expression1")
-    public ResponseEntity<String> expressionValidator(@RequestHeader("myHeader") String myHeader, @RequestHeader("continue") String continueHeader) {
-        Optional<String> optional = Optional.ofNullable(myHeader);
+    public ResponseEntity<String> expressionValidator1(@RequestHeader("continue") String continueHeader) {
+        Optional<String> optional = Optional.ofNullable(continueHeader);
         if(optional.isPresent()) {
-            producerTemplate.sendBodyAndHeader("direct:example", myHeader, "continue", myHeader);
-            return ResponseEntity.ok().body("Route triggered with value of " + myHeader);
+            producerTemplate.sendBodyAndHeader("direct:example", continueHeader, "continue", continueHeader);
+            return ResponseEntity.ok().body("Route triggered with value of " + continueHeader);
         }
         return ResponseEntity.ok().body("Please add Header Values");//To change body of created methods use File | Settings | File Templates.
     }
@@ -70,7 +70,7 @@ public class GreetingController {
     @PostMapping("/logger")
     public ResponseEntity<String> customLogger(@RequestBody String customeLogger) {
         Optional<String> optional = Optional.ofNullable(customeLogger);
-        if(!optional.isPresent()) {
+        if(optional.isPresent()) {
             producerTemplate.requestBody("direct:customlogger", customeLogger, String.class);
             return  ResponseEntity.ok().body("Route triggered with value of " + customeLogger);
         }
@@ -84,7 +84,7 @@ public class GreetingController {
         return "Exception handled";   //To change body of created methods use File | Settings | File Templates.
     }
 
-    @PostMapping("api/conversion")
+    @PostMapping("/conversion")
     public String convertDwScriptToJson(@RequestBody String request) {
         String result = producerTemplate.requestBody("direct:conversion", request, String.class);
         return result;

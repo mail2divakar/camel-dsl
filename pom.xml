@@ -50,31 +50,37 @@
 			<artifactId>camel-spring-boot-starter</artifactId>
 			<version>4.2.0</version>
 		</dependency>
-		<dependency>
+
+		<!--<dependency>
 			<groupId>org.apache.camel</groupId>
 			<artifactId>camel-undertow</artifactId>
 			<version>4.2.0</version>
-		</dependency>
+		</dependency>-->
 		<dependency>
 			<groupId>org.apache.camel.springboot</groupId>
 			<artifactId>camel-yaml-dsl-starter</artifactId>
 			<version>4.2.0</version>
 		</dependency>
-		<dependency>
+		<!--<dependency>
 			<groupId>jakarta.inject</groupId>
 			<artifactId>jakarta.inject-api</artifactId>
 			<version>2.0.1</version>
-		</dependency>
-		<dependency>
+		</dependency>-->
+		<!--<dependency>
 			<groupId>org.apache.camel.springboot</groupId>
 			<artifactId>camel-http-starter</artifactId>
 			<version>4.2.0</version>
-		</dependency>
-		<dependency>
+		</dependency>-->
+		<!--<dependency>
 			<groupId>org.apache.camel.springboot</groupId>
 			<artifactId>camel-validator-starter</artifactId>
 			<version>4.2.0</version>
-		</dependency>
+		</dependency>-->
+		<!--<dependency>
+			<groupId>org.apache.camel.springboot</groupId>
+			<artifactId>camel-rest-starter</artifactId>
+			<version>4.2.0</version>
+		</dependency>-->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
@@ -117,7 +123,65 @@
 		</dependency>
 
 		<!--  Mule Dependency End -->
+
+		<!-- R&D Begin-->
+		<!--<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-netty-http</artifactId>
+			<version>4.2.0</version>
+		</dependency>-->
+		<!--<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-platform-http</artifactId>
+			<version>4.2.0</version>
+		</dependency>-->
+		<dependency>
+			<groupId>org.apache.camel.springboot</groupId>
+			<artifactId>camel-platform-http-starter</artifactId>
+			<version>4.2.0</version>
+			<!-- use the same version as your Camel version -->
+		</dependency>
+		<!--<dependency>
+			<groupId>jakarta.servlet</groupId>
+			<artifactId>jakarta.servlet-api</artifactId>
+			<version>5.0.0</version>
+		</dependency>-->
+		<!--<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-jetty</artifactId>
+			<version>4.2.0</version>
+		</dependency>-->
+
+		<!-- we need spring web -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-web</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.camel</groupId>
+			<artifactId>camel-jackson</artifactId>
+			<version>4.2.0</version>
+		</dependency>
+
+		<!-- R&D End-->
 	</dependencies>
+
+	<!--<dependencyManagement>
+
+		<dependencies>
+			&lt;!&ndash; Camel BOM &ndash;&gt;
+			<dependency>
+				<groupId>org.apache.camel.springboot</groupId>
+				<artifactId>camel-spring-boot-bom</artifactId>
+				<version>4.2.0</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+			&lt;!&ndash; ... other BOMs or dependencies ... &ndash;&gt;
+		</dependencies>
+
+	</dependencyManagement>-->
+
 	<repositories>
 		<repository>
 			<id>mulesoft-releases</id>

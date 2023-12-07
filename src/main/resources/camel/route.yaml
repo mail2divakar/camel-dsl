@@ -15,7 +15,7 @@
             message: '${in.body}'
 
 - route:
-    id:  route-1896
+    id:  route-1999
     from:
       uri: 'direct:startvalidator'
       steps:
@@ -23,11 +23,19 @@
             uri: "file://C:/tmp/myschema.json"
 
 - route:
+    id:  route-1896
+    from:
+      uri: 'direct:hello'
+      steps:
+        - log:
+            message: 'Hello from route'
+
+- route:
     id:  route-1897
     from:
       uri: direct:expressions
       steps:
-        - set-header:
+        - setHeader:
             name: myHeader
             expression:
               constant: foo
@@ -127,7 +135,20 @@
 #        - to:
 #            uri: 'customComponent://transform'
 
-
+- rest:
+    id: route-1643
+    path: /api
+    get:
+      - produces: application/json
+        path: /hello
+#        setBody:
+#          constant: 'Camel Example Hello, SQS!'
+        to:
+          uri: direct:order
+      - produces: text/plain
+        path: /hello2
+        to:
+          uri: direct:hello
 
 
 
